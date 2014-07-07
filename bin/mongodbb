@@ -1,0 +1,5 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MONGO_DIR="$DIR/../mongo"
+mkdir $MONGO_DIR
+mongod --dbpath=$MONGO_DIR --nojournal
