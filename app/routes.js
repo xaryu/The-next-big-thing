@@ -30,7 +30,6 @@ module.exports = function(app, passport) {
 		app.get('/login', function(req, res) {
 			res.render('login.ejs', { message: req.flash('loginMessage') });
 		});
-
 		// process the login form
 		app.post('/login', passport.authenticate('local-login', {
 			successRedirect : '/profile', // redirect to the secure profile section
@@ -42,9 +41,7 @@ module.exports = function(app, passport) {
 		// show the signup form
 		app.get('/signup', function(req, res) {
 			res.render('signup.ejs', { message: req.flash('signupMessage') });
-
 		});
-
 		// process the signup form
 		app.post('/signup', passport.authenticate('local-signup', {
 			successRedirect : '/profile', // redirect to the secure profile section
@@ -103,8 +100,8 @@ module.exports = function(app, passport) {
 	// local -----------------------------------
 	app.get('/unlink/local', function(req, res) {
 		var user            = req.user;
-		user.local.email    = undefined;
-		user.local.password = undefined;
+		user.local.email    = undefined; 	// erase	
+		user.local.password = undefined;	// erase
 		user.save(function(err) {
 			res.redirect('/profile');
 		});
