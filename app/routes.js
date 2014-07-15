@@ -98,7 +98,7 @@ module.exports = function(app, passport) {
 // user account will stay active in case they want to reconnect in the future
 
 	// local -----------------------------------
-	app.get('/unlink/local', function(req, res) {
+	app.get('/unlink/local', isLoggedIn, function(req, res) {
 		var user            = req.user;
 		user.local.email    = undefined; 	// erase	
 		user.local.password = undefined;	// erase
@@ -108,7 +108,7 @@ module.exports = function(app, passport) {
 	});
 
 	// facebook -------------------------------
-	app.get('/unlink/facebook', function(req, res) {
+	app.get('/unlink/facebook', isLoggedIn, function(req, res) {
 		var user            = req.user;
 		user.facebook.token = undefined;
 		user.save(function(err) {

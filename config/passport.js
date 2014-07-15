@@ -41,6 +41,9 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
+        if(email)
+            email = email.toLowerCase(); //convert to lower case email
+
         // asynchronous
         process.nextTick(function() {
             User.findOne({ 'local.email' :  email }, function(err, user) {
@@ -74,53 +77,70 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
+        if(email)
+            email = email.toLowerCase(); //convert email to lower case
+
         // asynchronous
         process.nextTick(function() {
-
-            //  Whether we're signing up or connecting an account, we'll need
-            //  to know if the email address is in use.
-            User.findOne({'local.email': email}, function(err, existingUser) {
+            //if the user is not already logged in:
+            if(!req.user) {
+                User.findOne({'local.email': email}, function(err, user) {
 
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
 
                 // check to see if there's already a user with that email
-                if (existingUser) 
+                if (user) {
                     return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-
-                //  If we're logged in, we're connecting a new local account.
-                if(req.user) {
-                    var user            = req.user;
-                    user.local.email    = email;
-                    user.local.password = user.generateHash(password);
-                    user.save(function(err) {
-                        if (err)
-                            throw err;
-                        return done(null, user);
-                    });
-                } 
-                //  We're not logged in, so we're creating a brand new user.
-                else {
-                    // create the user
-                    var newUser            = new User();
-
-                    newUser.local.email    = email;
+                } else {
+                    //create the user
+                    var newUser = new User();
+                    newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
 
-                    newUser.save(function(err) {
-                        if (err)
+                    newUser.save(function(err){
+                        if(err)
                             throw err;
 
-                        return done(null, newUser);
+                        return done(null,newUser);
                     });
                 }
+            })
+        //if the user is logged in but has no local account
+            } else {
 
-            });
-        });
+            User.findOne({'local.email': email}, function(err, emailexists) {
 
-    }));
-
+                if(!emailexists)
+            {
+                 console.log("nu exista cont");
+                var user = req.user;
+                user.local.email = email;
+                user.local.password = user.generateHash(password);
+                user.save(function(err){
+                    if(err)
+                        throw err;
+                    return done(null,user);
+                });
+            }   else {
+                //MUST VALIDATE PASSWORD HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                console.log("exista cont");
+                var user = req.user;
+                    user.local.email = emailexists.local.email;
+                    user.local.password = emailexists.local.password;
+                    user.save(function(err) {
+                    if (err)
+                        throw err;
+                    return done(null, user);
+                                            });
+                }
+            
+    });
+}
+})
+}));
+              
     // =========================================================================
     // FACEBOOK ================================================================
     // =========================================================================
