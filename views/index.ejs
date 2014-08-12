@@ -2,15 +2,21 @@
 <!doctype html>
 <html>
 <head>
+	<% include ../views/partials/head %>
 	<title>TagTag - Authentication</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-	<style>
-		body	{ padding-top:80px;}
-	</style>
+	
 </head>
 <body>
-<div class="container">
+<body class="container">
+
+	<header>
+		<% include ../views/partials/header %>
+	</header>
+
+	<main>
+		<div class="container">
 <h1><span class="fa fa-tags"></span> Welcome to TagTag</h1>
 
 
@@ -26,6 +32,14 @@
 	</div>
 
 </div>
+	</main>
+
+	<footer>
+		<% include ../views/partials/footer %>
+	</footer>
+	
+</body>
+
 </body>
 </html>
 

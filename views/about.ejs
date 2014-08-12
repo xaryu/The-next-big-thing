@@ -1,0 +1,47 @@
+<!-- views/pages/about.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../views/partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../views/partials/header %>
+	</header>
+
+	<main>
+		<div class="row">
+			<div class="col-sm-8">
+			
+				<div class="jumbotron">
+					<h1>What is TagTag?</h1>
+					<p>TagTag is a portfolio project, nothing interesting, in which I'm learning stuff</p>
+					<h2>Variable</h2>
+					<p><%= tagline %></p>
+					<h2>Loop baby:</h2>
+					<ul>
+						<% drinks.forEach(function(drink) { %>
+							<li><%= drink.name %> - <%= drink.drunkness %></li>
+							<% }); %>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="col-sm-4">
+				
+				<div class="well">
+					<h3>Look I'm A Sidebar!</h3>
+				</div>
+
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<% include ../views/partials/footer %>
+	</footer>
+	
+</body>
+</html>

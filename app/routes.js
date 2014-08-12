@@ -19,6 +19,21 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+	
+	// About page
+
+	app.get('/about', function(req,res) {
+		var drinks = [
+		{ name: 'Bloody Mary', drunkness:3 },
+		{ name: 'Martini', drunkness:5 },
+		{ name: 'Scotch', drunkness: 10}
+		];
+		var tagline = "Any code of your own that you haven't looked at for 6 months might aswell be of you mother's";
+		res.render('about.ejs', {
+			drinks:drinks,
+			tagline:tagline
+		});
+	});
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -119,6 +134,8 @@ module.exports = function(app, passport) {
 
 
 };
+
+
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
