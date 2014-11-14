@@ -1,10 +1,8 @@
-# server.js
-
 # set up ======================================================================
 # get all the tools we need
 express = require("express")
 app = express()
-port = process.env.PORT or 8080
+port = process.env.port || 8080
 mongoose = require("mongoose")
 passport = require("passport")
 flash = require("connect-flash")
@@ -31,7 +29,7 @@ app.use passport.session() # persistent login sessions
 app.use flash() # use connect-flash for flash messages stored in session
 
 # routes ======================================================================
-require("./app/routes.js") app, passport # load our routes and pass in our app and fully configured passport
+require('./app/routes.coffee')(app, passport) # load our routes and pass in our app and fully configured passport
 
 # launch ======================================================================
 app.listen port
